@@ -12,6 +12,7 @@ import lombok.ToString;
 //       1         2   3   4  [5]  ...   9    10 > >>  
 // << < 11        12  13  14  15   ...  19    20 > >>  
 // << < 21        22  23  24  25  26
+//                                totalPageCount            
 
 @Getter
 @ToString
@@ -25,6 +26,7 @@ public class Pagination {
 	
 	private int     limitStart;
 	
+	private boolean existPrevPage;
 	private boolean existNextPage;
 	
 //	constructor
@@ -52,6 +54,14 @@ public class Pagination {
 		startPage = ( (pageNo - 1) / pageSize ) * pageSize + 1;
 		endPage   = startPage + pageSize - 1;
 		
+		// limitStart : 데이터 베이스에서 가져올 시작위치
+		limitStart = srchdto.getOffset();
+//		limitStart = (pageNo - 1) * numOfRows;
+		
+		// 이전 페이지로 이동 버튼 필요
+		existPrevPage = startPage > 1;
+		// 다음 페이지로 이동 버튼 필요
+		existNextPage = endPage < totalPageCount;
 		
 	}
 	
