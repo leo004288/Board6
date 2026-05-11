@@ -60,10 +60,10 @@
 		}  
    	
    	#paging > table {
-   		width:50%;
-   		margin: 0 auto;
+   		width:55%;
+   		margin: 10px auto;
    		td {
-   			border: 1px solid gray;
+   			border: 1px solid #DBDBDB;
    			background-color:white;
    			color: black;
    			a {

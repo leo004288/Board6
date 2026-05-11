@@ -37,3 +37,10 @@ FROM DATA D
 CROSS JOIN BASE B;
 
 commit;
+
+페이징 성능을 위한 인덱스 추천
+
+CREATE INDEX IDX_BOARD_MENU_IDX
+ON BOARD (MENU_ID, IDX DESC);
+
+이 인덱스는 MENU_ID별 게시글 목록을 최신순으로 가져올 때 유리합니다.

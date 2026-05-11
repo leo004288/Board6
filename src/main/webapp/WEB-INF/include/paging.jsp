@@ -3,9 +3,9 @@
 
     <%@taglib prefix="c" uri="jakarta.tags.core" %>
     
-    <c:set var="startnum" value="${searchDto.pagination.startPage}"/>
-    <c:set var="endnum" value="${searchDto.pagination.endPage}"/>
-    <c:set var="totalpagecount" value="${searchDto.pagination.totalPageCount}"/>
+    <c:set var="startnum" value="${searchdto.pagination.startPage}"/>
+    <c:set var="endnum" value="${searchdto.pagination.endPage}"/>
+    <c:set var="totalpagecount" value="${searchdto.pagination.totalPageCount}"/>
     
     <div id="paging">
     <table >
