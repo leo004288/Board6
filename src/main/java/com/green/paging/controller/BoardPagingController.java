@@ -1,6 +1,5 @@
 package com.green.paging.controller;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import com.green.board.dto.BoardDto;
 import com.green.menus.dto.MenuDTO;
 import com.green.menus.mapper.MenuMapper;
 import com.green.paging.dto.Pagination;
-import com.green.paging.dto.PagingResponse;
 import com.green.paging.dto.SearchDto;
 import com.green.paging.mapper.BoardPagingMapper;
 
@@ -37,7 +35,7 @@ public class BoardPagingController {
 		
 		// 게시물 목록 조회 (페이징해서)
 		// 해당 메뉴의 자료갯수 : 
-		int totalcount = boardPagingMapper.count(boarddto);  // menu_id
+		int totalcount = boardPagingMapper.count(boarddto, searchType, keyword);  // menu_id
 		System.out.println("totcount:" + totalcount);
 		
 //		PagingResponse<BoardDto> response = null;
@@ -86,6 +84,9 @@ public class BoardPagingController {
 		
 		mv.addObject("boardList", list);
 		mv.addObject("searchdto", searchdto);
+
+		mv.addObject("searchType", searchType);
+		mv.addObject("keyword", keyword);
 		
 		return mv;
 	} 

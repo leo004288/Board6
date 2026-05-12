@@ -72,7 +72,11 @@
    				}
    			}
    		} 
-
+	
+	#paging .active {
+		background-color: darkgray;
+		}
+		
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
@@ -102,12 +106,26 @@
 	  	<c:forEach var="board" items="${boardList}">
 	  	<tr>
 	  	  <td> ${ board.idx     } </td>       
-	  	  <td class="title"> <a href="/Board/View?idx=${board.idx}&menu_id=${board.menu_id}">${ board.title }</a> </td>
+	  	  <td class="title"> <a href="/Board/View?idx=${board.idx}&menu_id=${board.menu_id}&nowpage=${nowpage}">${ board.title }</a> </td>
 	  	  <td> ${ board.writer  } </td>
 	  	  <td> ${ board.regdate } </td>
 	  	  <td> ${ board.hit     } </td>
 	  	</tr>
 	  	</c:forEach>
+	  	
+	  	<form action="/BoardPaging/List" >
+	  <input type="hidden" name="menu_id" value="${ menu_id }" />	  
+	  <input type="hidden" name="nowpage" value="${ nowpage }" />	  
+	  <div id="search">
+	    <select name="searchType">
+	      <option value="title">제목</option>         
+	      <option value="content">내용</option> 
+	      <option value="writer">작성자</option> 
+	    </select>
+	    <input type="text" name="keyword" />
+	    <input type="submit" value="검색" />	    
+	  </div>
+	  </form>
 	  	
 	  </table>
 	  <%@include file="/WEB-INF/include/paging.jsp" %>

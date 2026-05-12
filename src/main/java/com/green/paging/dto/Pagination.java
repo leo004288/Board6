@@ -50,12 +50,12 @@ public class Pagination {
 		}
 		
 		// 페이지 번호의 시작
-		int pageSize = srchdto.getPageSize();   // 한줄에 출력한 페이지 번호수 
-		startPage = ( (pageNo - 1) / pageSize ) * pageSize + 1;
-		endPage   = startPage + pageSize - 1;
+		int pageSize  = srchdto.getPageSize();   // 한줄에 출력한 페이지 번호수 
+		startPage     = ( (pageNo - 1) / pageSize ) * pageSize + 1;
+		endPage       = startPage + pageSize - 1;
 		
 		// limitStart : 데이터 베이스에서 가져올 시작위치
-		limitStart = srchdto.getOffset();
+		limitStart    = srchdto.getOffset();
 //		limitStart = (pageNo - 1) * numOfRows;
 		
 		// 이전 페이지로 이동 버튼 필요
