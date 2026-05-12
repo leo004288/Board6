@@ -16,11 +16,13 @@
     		</c:if>
     		
     		<c:forEach var="pagenum" begin="${startnum}" end="${endnum}" step="1">
+    			<c:if test="${pagenum le totalpagecount}">
     			<td class="${pagenum == nowpage ? 'active' : ''}">
     				<a href="/BoardPaging/List?menu_id=${menu_id}&nowpage=${pagenum}&searchType=${searchType}&keyword=${keyword}">
     				${pagenum}
     				</a>
     			</td>
+    			</c:if>
     		</c:forEach>
     		
     		<c:if test="${endnum lt totalpagecount}">
