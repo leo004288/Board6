@@ -51,9 +51,12 @@ CREATE TABLE TUSER (
     PASSWD   VARCHAR2(12)  NOT NULL,
     USERNAME VARCHAR2(100) NOT NULL,
     EMAIL    VARCHAR2(320),
-    UPOINT   NUMBER(9)     DEFAULT 0,
+    UPOINT   NUMBER(9)     DEFAULT 1000,
     REGDATE  DATE          DEFAULT SYSDATE
 );
+
+INSERT INTO  TUSER VALUES ('1234','1234', '1234', '1234@1234', 1000, sysdate);
+COMMIT;
 
 -----------------------------------------------------------------------------------------
 -- 멀티 게시판 정보
@@ -81,44 +84,3 @@ SELECT idx,
 FROM   board
 WHERE  menu_id = 'MENU01'
 ORDER BY idx DESC;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

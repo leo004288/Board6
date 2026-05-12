@@ -28,22 +28,24 @@ public class BoardPagingController {
 
 	// /BoardPaging/List?menu_id=MENU01&nowpage=1
 	@RequestMapping("/List")
-	public ModelAndView list(BoardDto boarddto, int nowpage) {
+	public ModelAndView list(BoardDto boarddto, int nowpage, String searchType, String keyword, MenuDTO menudto) {
 		
 		// 메뉴목록 : menus.jsp
-		List<MenuDTO> menuList = menuMapper.getMenuList();
+		List<MenuDTO> menuList  = menuMapper.getMenuList();
+		
+		String        menu_name = menuMapper.getMenu_name(menudto);
 		
 		// 게시물 목록 조회 (페이징해서)
 		// 해당 메뉴의 자료갯수 : 
 		int totalcount = boardPagingMapper.count(boarddto);  // menu_id
 		System.out.println("totcount:" + totalcount);
 		
-		PagingResponse<BoardDto> response = null;
-		if(totalcount < 1) {  // 현재 menu_id로 조회한 자료가 없다면
-			response = new PagingResponse<>(
-					Collections.emptyList(), null);
-					//Collections.emptyList() : 자료가 없는 빈 리스트를 채운다
-		}
+//		PagingResponse<BoardDto> response = null;
+//		if(totalcount < 1) {  // 현재 menu_id로 조회한 자료가 없다면
+//			response = new PagingResponse<>(
+//					Collections.emptyList(), null);
+//					//Collections.emptyList() : 자료가 없는 빈 리스트를 채운다
+//		}
 		
 		// 페이징을 위한 초기설정
 		SearchDto searchdto = new SearchDto();
@@ -58,19 +60,21 @@ public class BoardPagingController {
 		// 검색 조건 추가
 		// 추가된 검색 조건
 		String menu_id = boarddto.getMenu_id();
-		String title   = boarddto.getTitle();
-		String writer  = boarddto.getWriter();
-		String content = boarddto.getContent();
+//		String title   = boarddto.getTitle();
+//		String writer  = boarddto.getWriter();
+//		String content = boarddto.getContent();
 		
 		int offset    = searchdto.getOffset();
 		int numOfRows = searchdto.getNumOfRows();
 		
 		// 검색조건추가
+//		List<BoardDto> list = boardPagingMapper.getBoardPagingList(
+//				menu_id, title, writer, content, offset, numOfRows);
 		List<BoardDto> list = boardPagingMapper.getBoardPagingList(
-				menu_id, title, writer, content, offset, numOfRows);
-		response = new PagingResponse<>(list, pagination);
+				menu_id, searchType, keyword, offset, numOfRows);
 		
-		System.out.println(response);
+//		response = new PagingResponse<>(list, pagination);
+//		System.out.println(response);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("boardpaging/list");
@@ -78,6 +82,7 @@ public class BoardPagingController {
 
 		mv.addObject("nowpage", nowpage);
 		mv.addObject("menu_id", menu_id);        // 현재 메뉴정보
+		mv.addObject("menu_name", menu_name);
 		
 		mv.addObject("boardList", list);
 		mv.addObject("searchdto", searchdto);

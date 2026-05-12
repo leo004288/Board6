@@ -1,3 +1,4 @@
+--menu_id별로 샘플 데이터 200건씩
 INSERT INTO BOARD (
       IDX
     , MENU_ID

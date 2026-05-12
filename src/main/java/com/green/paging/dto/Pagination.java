@@ -24,7 +24,7 @@ public class Pagination {
 	private int     startPage; 
 	private int     endPage; 
 	
-	private int     limitStart;
+	private int     limitStart;     // Offset 값
 	
 	private boolean existPrevPage;
 	private boolean existNextPage;

@@ -60,7 +60,7 @@
 		}  
    	
    	#paging > table {
-   		width:55%;
+   		width:70%;
    		margin: 10px auto;
    		td {
    			border: 1px solid #DBDBDB;

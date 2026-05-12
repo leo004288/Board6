@@ -24,8 +24,8 @@
     		</c:forEach>
     		
     		<c:if test="${endnum lt totalpagecount}">
-    		<td><a href="/BoardPaging/List?menu_id=${menu_id}&nowpage=1"> 다음 </a></td>
-    		<td><a href="/BoardPaging/List?menu_id=${menu_id}&nowpage=${totalpagecount+1}"> 마지막 </a></td>
+    		<td><a href="/BoardPaging/List?menu_id=${menu_id}&nowpage=${endnum+1}"> 다음 </a></td>
+    		<td><a href="/BoardPaging/List?menu_id=${menu_id}&nowpage=${totalpagecount}"> 마지막 </a></td>
     		</c:if>
     		
     	</tr>

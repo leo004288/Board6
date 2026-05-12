@@ -23,6 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		// 로그인 대상 페이지 
 		registry.addInterceptor(authInterceptor)
 		.addPathPatterns("/Board/**")
+//		.addPathPatterns("/Board/**", "/BoardPaging/**")
 		.excludePathPatterns("/css/**", "/img/**", "/js/**");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}
