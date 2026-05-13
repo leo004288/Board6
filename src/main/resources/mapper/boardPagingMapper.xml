@@ -41,4 +41,37 @@
 	OFFSET   #{offset} ROWS FETCH NEXT #{numOfRows} ROWS ONLY
 	</select>
 	
+<!-- BoardPagingList -->
+	<select id="getBoard">
+	SELECT  IDX,
+	        MENU_ID,
+	        TITLE,
+	        CONTENT,
+	        WRITER,
+	        TO_CHAR(REGDATE, 'YYYY-MM-DD') REGDATE,
+	        HIT
+	  FROM  BOARD
+	  WHERE IDX = ${idx}
+	</select>
+	
+<!--idx 조회수를 증가 -->
+	<update id="incHit">
+	UPDATE BOARD
+	SET    HIT = HIT + 1
+	WHERE  IDX = #{idx}
+	</update>
+
+<!-- 새글 추가 -->
+	<insert id="insertBoard">
+	INSERT INTO BOARD ( IDX, MENU_ID, TITLE, CONTENT, WRITER)
+	VALUES ((SELECT NVL(MAX(IDX), 0)+1 FROM BOARD), #{menu_id}, #{title}, #{content}, #{writer}) 
+	</insert>
+	
+<!--글 삭제 -->	
+	<delete id="deleteBoard">
+	DELETE 
+	FROM   BOARD
+	WHERE  IDX = #{idx}
+	</delete>
+	
 </mapper>

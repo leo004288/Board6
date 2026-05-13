@@ -91,6 +91,81 @@ public class BoardPagingController {
 		return mv;
 	} 
 	
+	// /BoardPaging/View?idx=213&menu_id=MENU01&nowpage=1
+	@RequestMapping("/View")
+	public ModelAndView view(BoardDto boarddto, int nowpage) {
+		
+		// 메뉴목록 조회
+		List<MenuDTO> menuList = menuMapper.getMenuList(); 
+		
+		// 조회수 1증가
+		boardPagingMapper.incHit(boarddto);
+		
+		// idx 로 게시글 한개 조회
+		BoardDto board = boardPagingMapper.getBoard(boarddto);
+		
+		String menu_id = boarddto.getMenu_id();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("boardpaging/view");
+		mv.addObject("menuList", menuList);
+		
+		mv.addObject("menu_id", menu_id);
+		mv.addObject("nowpage", nowpage);
+		
+		mv.addObject("board", board);
+		return mv;
+	} 
+	
 	// /BoardPaging/WriteForm?menu_id=MENU01&nowpage=1
+	@RequestMapping("/WriteForm")
+	public ModelAndView writeForm(BoardDto boarddto, int nowpage) {
+		
+		// 메뉴목록조회
+		List<MenuDTO> menuList = menuMapper.getMenuList();
+		
+		String menu_id = boarddto.getMenu_id();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/boardpaging/write");
+		mv.addObject("menuList", menuList);
+		mv.addObject("menu_id", menu_id);
+		
+		mv.addObject("nowpage", nowpage);
+		return mv;
+	}
+	
+	// /BoardPaging/Write
+	// 넘어온 값 : menu_id=MENU01, title=제목, writer=aaa, content=내용
+	// 돌아가기 위해 필요한 변수 : menu_id, nowpage
+	@RequestMapping("/Write")
+	public ModelAndView write(BoardDto boarddto, int nowpage) {
+		
+		// db에 저장
+		boardPagingMapper.insertBoard(boarddto);
+		
+		ModelAndView mv      = new ModelAndView();
+		String       menu_id = boarddto.getMenu_id();
+ 		String       fmt     = "redirect:/BoardPaging/List?menu_id=%s&nowpage=%d";
+		String       loc     = String.format(fmt, menu_id, nowpage);
+		mv.setViewName(loc);
+		return mv;
+	}
+	
+//	/BoardPaging/Delete?idx=1815&menu_id=MENU01&nowpage=1
+	@RequestMapping("/Delete")
+	public ModelAndView delete(BoardDto boarddto, int nowpage) {
+		
+		// idx로 board를 삭제
+		boardPagingMapper.deleteBoard(boarddto);
+		
+		ModelAndView mv      = new ModelAndView();
+		String       menu_id = boarddto.getMenu_id();
+		String       loc     = """
+				redirect:/BoardPaging/List?menu_id=%s&nowpage=%d
+				""".formatted(menu_id, nowpage);
+		mv.setViewName(loc);
+		return mv;
+	}
 	
 }

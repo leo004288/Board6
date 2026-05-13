@@ -185,7 +185,10 @@ public class UserController {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("login", user);
-		return "redirect:/";
+		
+		String       loc        =  session.getAttribute("loc") + " ";  
+		
+		return  "redirect:" + loc;
 //		return "redirect:/Board/List?menu_id=MENU01";
 	}
 	
