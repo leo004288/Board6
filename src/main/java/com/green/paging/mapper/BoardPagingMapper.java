@@ -27,6 +27,9 @@ public interface BoardPagingMapper {
 	void deleteBoard(BoardDto boarddto);
 
 
+	void updateBoard(BoardDto boarddto);
+
+
 	
 
 }

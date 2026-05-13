@@ -111,6 +111,15 @@ public class BoardPagingController {
 		// idx 로 게시글 한개 조회
 		BoardDto board = boardPagingMapper.getBoard(boarddto);
 		
+		// 조회된 content 안에 있는 엔터 \n 을 <br> 변경
+		String content = board.getContent();
+		if(content != null )
+		board.setContent(content.replace("\n", "<br>"));
+		
+//		// 변경방법2
+//		if(board != null && board.getContent() != null)
+//		board.setContent(board.getContent().replace("\n", "<br>"));
+		
 		String menu_id = boarddto.getMenu_id();
 		
 		ModelAndView mv = new ModelAndView();
@@ -194,6 +203,24 @@ public class BoardPagingController {
 		
 		mv.addObject("board", board);
 		mv.addObject("nowpage", nowpage);
+
+		return mv;
+	}
+	
+	// /BoardPaging/Update
+	@RequestMapping("/Update")
+	public ModelAndView update(BoardDto boarddto, int nowpage) {
+		
+		// db로 넘김
+		boardPagingMapper.updateBoard(boarddto);
+		
+		// List 돌아감
+		String       menu_id = boarddto.getMenu_id(); 
+		ModelAndView mv      = new ModelAndView();
+		String       loc     = """
+				redirect:/BoardPaging/List?menu_id=%s&nowpage=%d
+				""".formatted(menu_id, nowpage);
+		mv.setViewName(loc);
 		return mv;
 	}
 	
