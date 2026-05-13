@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.green.board.dto.BoardDto;
+import com.green.config.WebMvcConfig;
 import com.green.menus.dto.MenuDTO;
 import com.green.menus.mapper.MenuMapper;
 import com.green.paging.dto.Pagination;
@@ -18,11 +19,17 @@ import com.green.paging.mapper.BoardPagingMapper;
 @RequestMapping("/BoardPaging")
 public class BoardPagingController {
 
+    private final WebMvcConfig webMvcConfig;
+
 	@Autowired
 	private MenuMapper menuMapper;
 	
 	@Autowired
 	private BoardPagingMapper boardPagingMapper;
+
+    BoardPagingController(WebMvcConfig webMvcConfig) {
+        this.webMvcConfig = webMvcConfig;
+    }
 
 	// /BoardPaging/List?menu_id=MENU01&nowpage=1
 	@RequestMapping("/List")
@@ -152,7 +159,7 @@ public class BoardPagingController {
 		return mv;
 	}
 	
-//	/BoardPaging/Delete?idx=1815&menu_id=MENU01&nowpage=1
+    // /BoardPaging/Delete?idx=1815&menu_id=MENU01&nowpage=1
 	@RequestMapping("/Delete")
 	public ModelAndView delete(BoardDto boarddto, int nowpage) {
 		
@@ -165,6 +172,28 @@ public class BoardPagingController {
 				redirect:/BoardPaging/List?menu_id=%s&nowpage=%d
 				""".formatted(menu_id, nowpage);
 		mv.setViewName(loc);
+		return mv;
+	}
+	 
+    // /BoardPaging/UpdateForm?idx=1814&menu_id=MENU01&nowpage=1
+	@RequestMapping("/UpdateForm")
+	public ModelAndView updateForm(BoardDto boarddto, int nowpage) {
+		
+		// 메뉴목록조회 
+		List<MenuDTO> menuList = menuMapper.getMenuList();
+		
+		// 수정할 자료 조회
+		BoardDto board = boardPagingMapper.getBoard(boarddto);
+		
+		// 수정페이지 이동
+		String       menu_id = boarddto.getMenu_id(); 
+		ModelAndView mv      = new ModelAndView();
+		mv.setViewName("/boardpaging/update");
+		mv.addObject("menuList", menuList);
+		mv.addObject("menu_id", menu_id);
+		
+		mv.addObject("board", board);
+		mv.addObject("nowpage", nowpage);
 		return mv;
 	}
 	

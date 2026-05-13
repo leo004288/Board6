@@ -62,7 +62,7 @@
 <body>
 	<main>
 	<%@include file="/WEB-INF/include/menuspaging.jsp" %>
-	  <h2>새 글 쓰기 [${menu_name} 게시판]</h2>
+	  <h2 class="h2"><b id="mname">${menu_name}</b>새 글 쓰기 </h2>
 	  
 	  <form action="/BoardPaging/Write" method="post">
 	  <input type="hidden" name="menu_id" value="${menu_id}"></input>
@@ -92,7 +92,14 @@
 	 
 	</main>
 	
-<!-- javascript -->
+<!-- Javascript 코딩 : client validation --> 
+		<script>
 	
+		const mnameEl     = document.querySelector('#mname')
+		let   menunameEl  = document.querySelector('.menu .active')
+		
+		mnameEl.innerHTML = menunameEl.innerHTML
+		
+		</script>
 </body>
 </html>

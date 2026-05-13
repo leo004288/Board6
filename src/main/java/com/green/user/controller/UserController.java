@@ -181,14 +181,19 @@ public class UserController {
 	@RequestMapping("/Login")
 	public String login (UserDto userdto, HttpServletRequest request) {
 		
-		UserDto user = userMapper.getUser(userdto);
+		UserDto     user    = userMapper.getLogin(userdto);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("login", user);
 		
-		String       loc        =  session.getAttribute("loc") + " ";  
+		String      loc     = "";  
+		// 주소가 "/" 일때는 session.getAttribute("loc") -> null 이다
+		if(session.getAttribute("loc") == null )
+			loc = "redirect:/";
+		else
+			loc = "redirect:" + session.getAttribute("loc").toString();
 		
-		return  "redirect:" + loc;
+		return loc;
 //		return "redirect:/Board/List?menu_id=MENU01";
 	}
 	
